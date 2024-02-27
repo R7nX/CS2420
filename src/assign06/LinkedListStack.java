@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 public class LinkedListStack<T> implements Stack<Object> {
 	public LinkedListStack() {
-
+		//TODO Create this method
 	}
 
 	@Override
