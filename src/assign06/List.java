@@ -94,17 +94,17 @@ public interface List<E> extends Iterable<E> {
 	public boolean isEmpty();
 	
 	/**
-	 * Removes all of the elements from this list.
+	 * Removes all the elements from this list.
 	 * O(1) for a singly-linked list.
 	 */
 	public void clear();
 	
 	/**
-	 * Generates an array containing all of the elements in this list in proper sequence 
+	 * Generates an array containing all the elements in this list in proper sequence
 	 * (from first element to last element).
 	 * O(N) for a singly-linked list.
 	 * 
-	 * @return an array containing all of the elements in this list, in order
+	 * @return an array containing all the elements in this list, in order
 	 */
 	public Object[] toArray();
 	

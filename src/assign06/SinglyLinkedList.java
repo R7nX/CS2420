@@ -121,7 +121,7 @@ public class SinglyLinkedList<T> implements List<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-        return null;
+        return new SinglyListIterator();
 	}
 
 	private class SinglyListIterator implements Iterator<T> {

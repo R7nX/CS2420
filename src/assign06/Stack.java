@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 public interface Stack<E> {
 
 	/**
-	 * Removes all of the elements from the stack.
+	 * Removes all the elements from the stack.
 	 */
 	public void clear();
 
