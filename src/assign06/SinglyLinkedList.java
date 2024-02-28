@@ -4,15 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SinglyLinkedList<T> implements List<T> {
-    private static class Node<T> {
-        private T data;
-        private Node<T> next;
-
-        public Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
 
     private Node<T> head;
     private int size;
@@ -24,73 +15,112 @@ public class SinglyLinkedList<T> implements List<T> {
 
     @Override
     public void insertFirst(T element) {
-        // TODO Auto-generated method stub
-
+        head = new Node<T>(element, head);
+        size++;
     }
 
     @Override
     public void insert(int index, T element) throws IndexOutOfBoundsException{
-        // TODO Auto-generated method stub
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+        if (index == 0)
+            insertFirst(element);
+        else{
+            Node<T> prevNode = getNode(index - 1);
+        }
 
+    }
+
+    private Node<T> getNode(int pos){
+        Node<T> temp = head;
+        for (int i = 0; i < pos; i++){
+            temp = temp.next;
+        }
+        return temp;
     }
 
     @Override
     public T getFirst() throws NoSuchElementException {
-        // TODO Auto-generated method stub
-        return null;
+        if (head == null)
+            throw new NoSuchElementException();
+        return head.data;
     }
 
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
-        // TODO Auto-generated method stub
-        return null;
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+        Node<T> currNode = getNode(index);
+        return currNode.data;
     }
 
     @Override
     public T deleteFirst() throws NoSuchElementException {
-        // TODO Auto-generated method stub
-        return null;
+        if (head == null)
+            throw new NoSuchElementException();
+        T temp = head.data;
+        head = head.next;
+        size--;
+        return temp;
     }
 
     @Override
     public T delete(int index) throws IndexOutOfBoundsException {
-        // TODO Auto-generated method stub
-        return null;
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+
+        if (index == 0)
+            return deleteFirst();
+        else{
+            Node<T> prevNode = getNode(index - 1);
+            T temp = prevNode.next.data;
+            prevNode.next = prevNode.next.next;
+            size--;
+            return temp;
+        }
     }
 
     @Override
     public int indexOf(T element) {
-        // TODO Auto-generated method stub
-        return 0;
+        Node<T> currNode = head;
+        for (int i = 0; i < size; i++){
+            if (currNode.data.equals(element))
+                return i;
+            currNode = currNode.next;
+        }
+        return -1;
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return size;
     }
 
 	@Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+        return size == 0;
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-
+        head = null;
+        size = 0;
     }
 
     @Override
     public T[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
+        Object[] array = new Object[size];
+        Node<T> currNode = head;
+        for (int i = 0; i < size; i++){
+            array[i] = currNode.data;
+            currNode = currNode.next;
+        }
+        return (T[]) array;
     }
 
 	@Override
 	public Iterator<T> iterator() {
-		return null;
+        return null;
 	}
 
 	private class SinglyListIterator implements Iterator<T> {
@@ -119,6 +149,16 @@ public class SinglyLinkedList<T> implements List<T> {
                 throw new NoSuchElementException();
             }
             pre.next = curr;
+        }
+    }
+
+    private static class Node<T> {
+        private T data;
+        private Node<T> next;
+
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
         }
     }
 
