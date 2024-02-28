@@ -15,7 +15,7 @@ public class SinglyLinkedList<T> implements List<T> {
 
     @Override
     public void insertFirst(T element) {
-        head = new Node<T>(element, head);
+        head = new Node<>(element, head);
         size++;
     }
 
@@ -27,8 +27,9 @@ public class SinglyLinkedList<T> implements List<T> {
             insertFirst(element);
         else{
             Node<T> prevNode = getNode(index - 1);
+            prevNode.next = new Node<>(element, prevNode.next);
+            size++;
         }
-
     }
 
     private Node<T> getNode(int pos){
