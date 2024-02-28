@@ -4,34 +4,60 @@ import java.net.URL;
 import java.util.NoSuchElementException;
 
 public class WebBrowser {
-	private SinglyLinkedList<String> back;
-	private LinkedListStack<String> forward;
+    private LinkedListStack<URL> backward;
+    private LinkedListStack<URL> forward;
+    private URL currentSite;
 
-	public WebBrowser() {
+    public WebBrowser() {
+        backward = new LinkedListStack<>();
+        forward = new LinkedListStack<>();
+        currentSite = null;
+    }
 
-	}
+    public WebBrowser(SinglyLinkedList<URL> history) {
+        for (URL site : history) {
+            backward.push(site);
+        }
+        currentSite = backward.pop();
+    }
 
-	public WebBrowser(SinglyLinkedList<URL> history) {
+    public void visit(URL webpage) {
+        backward.push(webpage);
+        currentSite = webpage;
+        forward.clear();
+    }
 
-	}
+    public URL back() throws NoSuchElementException {
+        if (backward.isEmpty())
+            throw new NoSuchElementException();
+        forward.push(currentSite);
+        currentSite = backward.pop();
+        return currentSite;
+    }
 
-	public void visit(URL webpage) {
+    public URL forward() throws NoSuchElementException {
+        if (forward.isEmpty())
+            throw new NoSuchElementException();
+        backward.push(currentSite);
+        currentSite = forward.pop();
+        return currentSite;
+    }
 
-	}
+    public SinglyLinkedList<URL> history() {
+        SinglyLinkedList<URL> historyList = new SinglyLinkedList<>();
+        LinkedListStack<URL> tempStack = new LinkedListStack<>();
 
-	public URL back() throws NoSuchElementException {
-		return null;
+        tempStack.push(currentSite);
+        while (!backward.isEmpty()){
+            URL url = backward.pop();
+            historyList.insertFirst(url);
+            tempStack.push(url);
+        }
 
-	}
-
-	public URL forward() throws NoSuchElementException {
-		return null;
-
-	}
-
-	public SinglyLinkedList<URL> history() {
-		return null;
-
-	}
+        while (!tempStack.isEmpty()){
+            backward.push(tempStack.pop());
+        }
+        return historyList;
+    }
 
 }
