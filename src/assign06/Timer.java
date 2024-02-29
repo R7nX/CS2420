@@ -9,8 +9,7 @@ import java.util.Random;
 
 public class Timer extends TimerTemplate {
     Random random = new Random();
-    private ArrayList<Integer> num;
-
+    private LinkedListStack<Integer> linkedListStack = new LinkedListStack<>();
     /**
      * Create a timer
      *
@@ -19,11 +18,11 @@ public class Timer extends TimerTemplate {
      */
     public Timer(int[] problemSizes, int timesToLoop) {
         super(problemSizes, timesToLoop);
-        num = new ArrayList<>();
     }
 
     @Override
     protected void setup(int n) {
+        linkedListStack.clear();
     }
 
     @Override

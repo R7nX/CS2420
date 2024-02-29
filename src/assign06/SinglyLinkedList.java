@@ -149,7 +149,12 @@ public class SinglyLinkedList<T> implements List<T> {
             if (pre == null) {
                 throw new NoSuchElementException();
             }
-            pre.next = curr;
+            if (pre == head)
+                head = curr;
+            else
+                pre.next = curr;
+
+            pre = null;
         }
     }
 
