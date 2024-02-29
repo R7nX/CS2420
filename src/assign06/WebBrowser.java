@@ -15,14 +15,25 @@ public class WebBrowser {
     }
 
     public WebBrowser(SinglyLinkedList<URL> history) {
+        backward = new LinkedListStack<>();
+        forward = new LinkedListStack<>();
+        currentSite = null;
+
+        LinkedListStack<URL> tempStack = new LinkedListStack<>();
+
         for (URL site : history) {
-            backward.push(site);
+            tempStack.push(site);
         }
+
+        while(!tempStack.isEmpty())
+            backward.push(tempStack.pop());
+
         currentSite = backward.pop();
     }
 
     public void visit(URL webpage) {
-        backward.push(webpage);
+        if (!(currentSite == null))
+            backward.push(currentSite);
         currentSite = webpage;
         forward.clear();
     }
@@ -47,7 +58,6 @@ public class WebBrowser {
         SinglyLinkedList<URL> historyList = new SinglyLinkedList<>();
         LinkedListStack<URL> tempStack = new LinkedListStack<>();
 
-        backward.push(currentSite);
         while (!backward.isEmpty()){
             URL url = backward.pop();
             tempStack.push(url);
@@ -58,7 +68,7 @@ public class WebBrowser {
             historyList.insertFirst(url);
             backward.push(url);
         }
-
+        historyList.insertFirst(currentSite);
         return historyList;
     }
 

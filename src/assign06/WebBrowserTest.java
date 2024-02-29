@@ -18,17 +18,17 @@ class WebBrowserTest {
 		URL link = new URL("https://a");
 		assertEquals("https://a", link.toString()); // true
 		assertNotEquals("https://b", link.toString()); // false
-		assertEquals(new URL("https://b"), link); // unexpectedly true }
+		assertEquals(new URL("https://b"), link); // unexpectedly true
 
 	}
 
 	@Test
-	void testWebBrowserHistory() throws MalformedURLException {
+	void testwebbrowserhistory() throws MalformedURLException {
 		URL URL1 = new URL("https://a");
 		URL URL2 = new URL("https://b");
 		URL URL3 = new URL("https://c");
 
-		// Test visit method
+		// test visit method
 		WebBrowser w = new WebBrowser();
 		w.visit(URL1);
 		w.visit(URL2);
@@ -36,6 +36,7 @@ class WebBrowserTest {
 
 		// Test history method
 		SinglyLinkedList<URL> list = w.history();
+
 		// list should be [ URL3, URL2, URL1 ]
 		assertEquals(URL3, list.get(0));
 		assertEquals(URL2, list.get(1));
@@ -56,17 +57,16 @@ class WebBrowserTest {
 		  WebBrowser webBrowser = new WebBrowser();
 
 	        // Visit some URLs
-	        URL url1 = new URL("https://example1.com");
-	        URL url2 = new URL("https://example2.com");
-	        URL url3 = new URL("https://example3.com");
-	        webBrowser.visit(url1);
-	        webBrowser.visit(url2);
-	        webBrowser.visit(url3);
+	        URL URL1 = new URL("https://example1.com");
+	        URL URL2 = new URL("https://example2.com");
+	        URL URL3 = new URL("https://example3.com");
+	        webBrowser.visit(URL1);
+	        webBrowser.visit(URL2);
+	        webBrowser.visit(URL3);
 
 	        // Verify back functionality
-	        assertEquals(url3, webBrowser.back()); // Navigate back to url2
-	        assertEquals(url2, webBrowser.back()); // Navigate back to url1
-	        assertEquals(url1, webBrowser.back()); // Navigate back to initial URL
+	        assertEquals(URL2, webBrowser.back()); // Navigate back to url2
+	        assertEquals(URL1, webBrowser.back()); // Navigate back to initial URL
 	}
 	@Test
 	void testWebBrowserBackThrow() throws MalformedURLException {
@@ -80,19 +80,19 @@ class WebBrowserTest {
 		 WebBrowser webBrowser = new WebBrowser();
 
 	        // Visit some URLs
-	        URL url1 = new URL("https://example1.com");
-	        URL url2 = new URL("https://example2.com");
-	        URL url3 = new URL("https://example3.com");
-	        webBrowser.visit(url1);
-	        webBrowser.visit(url2);
-	        webBrowser.visit(url3);
+	        URL URL1 = new URL("https://example1.com");
+	        URL URL2 = new URL("https://example2.com");
+	        URL URL3 = new URL("https://example3.com");
+	        webBrowser.visit(URL1);
+	        webBrowser.visit(URL2);
+	        webBrowser.visit(URL3);
 
 	        // Verify back functionality
-	        webBrowser.back(); // Navigate back to url2
-	        URL result = webBrowser.forward(); // Navigate forward to url3
+	        webBrowser.back(); // Navigate back to URL2
+	        URL result = webBrowser.forward(); // Navigate forward to URL3
 
-	        // Verify that the forward method correctly returns the URL of the current site (url3)
-	        assertEquals(url3, result);
+	        // Verify that the forward method correctly returns the URL of the current site (URL3)
+	        assertEquals(URL3, result);
 	}
 	
 	@Test

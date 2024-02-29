@@ -146,7 +146,7 @@ public class SinglyLinkedList<T> implements List<T> {
         @Override
         public void remove() {
             if (pre == null) {
-                throw new NoSuchElementException();
+                throw new IllegalStateException();
             }
             if (pre == head)
                 head = curr;
