@@ -155,6 +155,7 @@ public class SinglyLinkedList<T> implements List<T> {
                 pre.next = curr;
 
             pre = null;
+            size--;
         }
     }
 
