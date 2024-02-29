@@ -47,16 +47,18 @@ public class WebBrowser {
         SinglyLinkedList<URL> historyList = new SinglyLinkedList<>();
         LinkedListStack<URL> tempStack = new LinkedListStack<>();
 
-        tempStack.push(currentSite);
+        backward.push(currentSite);
         while (!backward.isEmpty()){
             URL url = backward.pop();
-            historyList.insertFirst(url);
             tempStack.push(url);
         }
 
         while (!tempStack.isEmpty()){
-            backward.push(tempStack.pop());
+            URL url = tempStack.pop();
+            historyList.insertFirst(url);
+            backward.push(url);
         }
+
         return historyList;
     }
 
