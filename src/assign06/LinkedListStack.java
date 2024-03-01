@@ -20,11 +20,17 @@ public class LinkedListStack<T> implements Stack<T> {
 
 	@Override
 	public T peek() throws NoSuchElementException {
+		if (isEmpty()) {
+			throw new NoSuchElementException("Stack is empty");
+		}
 		return singlyLinkedList.getFirst();
 	}
 
 	@Override
 	public T pop() throws NoSuchElementException {
+		if (isEmpty()) {
+			throw new NoSuchElementException("Stack is empty");
+		}
 		T temp = singlyLinkedList.getFirst();
 		singlyLinkedList.deleteFirst();
 		return temp;

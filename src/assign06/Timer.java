@@ -9,7 +9,8 @@ import java.util.Random;
 
 public class Timer extends TimerTemplate {
     Random random = new Random();
-    private LinkedListStack<Integer> linkedListStack = new LinkedListStack<>();
+    private LinkedListStack<Integer> singlyList;
+//    private ArrayStack<Integer> singlyList;
     /**
      * Create a timer
      *
@@ -18,19 +19,24 @@ public class Timer extends TimerTemplate {
      */
     public Timer(int[] problemSizes, int timesToLoop) {
         super(problemSizes, timesToLoop);
+//        singlyList = new ArrayStack<>();
+        singlyList = new LinkedListStack<>();
     }
 
     @Override
     protected void setup(int n) {
-        linkedListStack.clear();
+        singlyList.clear();
+        for(int i = 0; i < random.nextInt();i++){
+            singlyList.push(i);
+        }
     }
 
     @Override
     protected void timingIteration(int n) {
+        singlyList.peek();
     }
     @Override
     protected void compensationIteration(int n) {
-
     }
 
     public static void main(String[] args) {
@@ -39,13 +45,13 @@ public class Timer extends TimerTemplate {
             problemSizes[i] = 10000 + i * 10000;
         }
 
-        int timesToLoop = 1000;
+        int timesToLoop = 800;
         var timer = new Timer(problemSizes, timesToLoop);
         timer.setup(10);
         var results = timer.run();
 
         try {
-            FileWriter csvWriter = new FileWriter("Results.csv");
+            FileWriter csvWriter = new FileWriter("Result.csv");
             csvWriter.write("n, time\n");
 
             for (Result result : results) {
