@@ -3,24 +3,24 @@ package assign07;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Vertex {
-    private String name;
-    private LinkedList<Edge> adj;
+public class Vertex<T> {
+    private T data;
+    private LinkedList<Edge<T>> adj;
 
-    public Vertex(String name){
-        this.name = name;
+    public Vertex(T data){
+        this.data = data;
         this.adj = new LinkedList<>();
     }
 
-    public String getName(){
-        return this.name;
+    public T getName(){
+        return this.data;
     }
 
-    public void addEdge(Vertex otherVertex){
+    public void addEdge(Vertex<T> otherVertex){
         adj.add(new Edge(otherVertex));
     }
 
-    public Iterator<Edge> edges(){
+    public Iterator<Edge<T>> edges(){
         return adj.iterator();
     }
 

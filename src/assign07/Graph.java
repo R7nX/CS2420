@@ -2,27 +2,27 @@ package assign07;
 
 import java.util.HashMap;
 
-public class Graph {
-    private HashMap<String, Vertex> vertices;
+public class Graph<T> {
+    private HashMap<T, Vertex<T>> vertices;
 
     public Graph(){
-        vertices = new HashMap<String, Vertex>();
+        vertices = new HashMap<T, Vertex<T>>();
     }
 
-    public void addEdge(String source, String destination){
-        Vertex vertex1;
+    public void addEdge(T source, T destination){
+        Vertex<T> vertex1;
         if (vertices.containsKey(source))
             vertex1 = vertices.get(source);
         else{
-            vertex1 = new Vertex(source);
+            vertex1 = new Vertex<T>(source);
             vertices.put(source, vertex1);
         }
 
-        Vertex vertex2;
+        Vertex<T> vertex2;
         if (vertices.containsKey(destination))
             vertex2 = vertices.get(destination);
         else{
-            vertex2 = new Vertex(destination);
+            vertex2 = new Vertex<T>(destination);
             vertices.put(destination, vertex2);
         }
     }

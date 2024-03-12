@@ -1,9 +1,9 @@
 package assign07;
 
-public class Edge {
-    public Vertex destination;
+public class Edge<T> {
+    public Vertex<T> destination;
 
-    public Edge(Vertex destination) {
+    public Edge(Vertex<T> destination) {
         this.destination = destination;
     }
 
