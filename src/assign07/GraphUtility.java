@@ -12,23 +12,23 @@ import java.util.Scanner;
  * @author CS 2420 instructors
  * @version Feb 28, 2024
  */
-public class GraphUtility {
+public class GraphUtility<T> {
 
-	public static <Type> boolean areConnected(List<Type> sources, List<Type> destinations, Type srcData, Type dstData)
+	public static <T> boolean areConnected(List<T> sources, List<T> destinations, T srcData, T dstData)
 			throws IllegalArgumentException {
-		// FILL IN + ADD METHOD COMMENT
-		return false;
+		Graph<T> graph = buildGraph(sources, destinations);
+		return graph.areConnected(srcData, dstData);
 	}
 
-	public static <Type> List<Type> shortestPath(List<Type> sources, List<Type> destinations, Type srcData, Type dstData)
+	public static <T> List<T> shortestPath(List<T> sources, List<T> destinations, T srcData, T dstData)
 			throws IllegalArgumentException {
-		// FILL IN + ADD METHOD COMMENT
-		return null;
+		Graph<T> graph = buildGraph(sources, destinations);
+		return graph.shortestPath(srcData, dstData);
 	}
 	
-	public static <Type> List<Type> sort(List<Type> sources, List<Type> destinations) throws IllegalArgumentException {
-		// FILL IN + ADD METHOD COMMENT
-		return null;
+	public static <T> List<T> sort(List<T> sources, List<T> destinations) throws IllegalArgumentException {
+		Graph<T> graph = buildGraph(sources, destinations);
+		return graph.topologicalSort();
 	}
 
 	/**
@@ -119,5 +119,23 @@ public class GraphUtility {
 		}
 
 		scan.close();
+	}
+
+	/**
+	 * This method build a representation of a graph from the source list, it acts
+	 * as a private helper method
+	 *
+	 * @param sources
+	 * @param destination
+	 * @return
+	 */
+	private static <T> Graph<T> buildGraph(List<T> sources, List<T> destination){
+		Graph<T> graph = new Graph<T>();
+		for (int i = 0; i < sources.size(); i++){
+			T src = sources.get(i);
+			T des = destination.get(i);
+			graph.addEdge(src, des);
+		}
+		return graph;
 	}
 }
