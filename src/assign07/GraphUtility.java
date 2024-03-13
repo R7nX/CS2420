@@ -17,13 +17,13 @@ public class GraphUtility<T> {
 	public static <T> boolean areConnected(List<T> sources, List<T> destinations, T srcData, T dstData)
 			throws IllegalArgumentException {
 		Graph<T> graph = buildGraph(sources, destinations);
-		return graph.areConnected(srcData, dstData);
+		return graph.dfs(srcData, dstData);
 	}
 
 	public static <T> List<T> shortestPath(List<T> sources, List<T> destinations, T srcData, T dstData)
 			throws IllegalArgumentException {
 		Graph<T> graph = buildGraph(sources, destinations);
-		return graph.shortestPath(srcData, dstData);
+		return graph.bfs(srcData, dstData);
 	}
 	
 	public static <T> List<T> sort(List<T> sources, List<T> destinations) throws IllegalArgumentException {

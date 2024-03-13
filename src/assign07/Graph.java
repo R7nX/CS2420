@@ -28,12 +28,12 @@ public class Graph<T> extends GraphUtility<T> {
         }
     }
 
-    public boolean areConnected(T srcData, T dstData) {
+    public boolean dfs(T srcData, T dstData) {
         //TODO: Finish this fking method
         return false;
     }
 
-    public List<T> shortestPath(T srcData, T dstData) {
+    public List<T> bfs(T srcData, T dstData) {
         //TODO: Write this shit
         return null;
     }
