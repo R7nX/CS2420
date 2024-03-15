@@ -16,18 +16,38 @@ public class GraphUtility<T> {
 
 	public static <T> boolean areConnected(List<T> sources, List<T> destinations, T srcData, T dstData)
 			throws IllegalArgumentException {
+		if (sources.size() != destinations.size() || sources.isEmpty() || destinations.isEmpty())
+			throw new IllegalArgumentException("The sources and the destination size does not match");
+
+		if(sources.contains(null) || destinations.contains(null))
+			throw new IllegalArgumentException("Cannot contain null values");
+
 		Graph<T> graph = buildGraph(sources, destinations);
 		return graph.dfs(srcData, dstData);
 	}
 
 	public static <T> List<T> shortestPath(List<T> sources, List<T> destinations, T srcData, T dstData)
 			throws IllegalArgumentException {
+		if (sources.size() != destinations.size() || sources.isEmpty() || destinations.isEmpty())
+			throw new IllegalArgumentException("The sources and the destination size does not match");
+
+		if (!sources.contains(srcData) || !destinations.contains(dstData))
+			throw new IllegalArgumentException("The srcData or dstData was not found");
+
+		if(sources.contains(null) || destinations.contains(null))
+			throw new IllegalArgumentException("Cannot contain null values");
+
 		Graph<T> graph = buildGraph(sources, destinations);
 		return graph.bfs(srcData, dstData);
 	}
 	
 	public static <T> List<T> sort(List<T> sources, List<T> destinations) throws IllegalArgumentException {
+		if (sources.size() != destinations.size() || sources.isEmpty() || destinations.isEmpty())
+			throw new IllegalArgumentException("The sources and the destination size does not match");
+		if(sources.contains(null) || destinations.contains(null))
+			throw new IllegalArgumentException("Cannot contain null values");
 		Graph<T> graph = buildGraph(sources, destinations);
+
 		return graph.topologicalSort();
 	}
 
@@ -130,8 +150,8 @@ public class GraphUtility<T> {
 	 * @return
 	 */
 	private static <T> Graph<T> buildGraph(List<T> sources, List<T> destination){
-		Graph<T> graph = new Graph<T>();
-		for (int i = 0; i < sources.size(); i++){
+		Graph<T> graph = new Graph<>();
+        for (int i = 0; i < sources.size(); i++){
 			T src = sources.get(i);
 			T des = destination.get(i);
 			graph.addEdge(src, des);

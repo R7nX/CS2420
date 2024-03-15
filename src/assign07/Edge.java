@@ -1,13 +1,13 @@
 package assign07;
 
 public class Edge<T> {
-    public Vertex<T> destination;
+    private Vertex<T> destination;
 
     public Edge(Vertex<T> destination) {
         this.destination = destination;
     }
 
-    public Vertex getDestination() {
+    public Vertex<T> getDestination() {
         return this.destination;
     }
 
