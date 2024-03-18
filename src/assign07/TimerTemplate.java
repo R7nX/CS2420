@@ -79,6 +79,7 @@ abstract public class TimerTemplate {
         long compensationTime = afterCompensationLoop - afterTimedCode;
         long totalTimedCodeTime = afterTimedCode - startTime;
         double averageTime = (double)(totalTimedCodeTime - compensationTime)/timesToLoop;
+        System.out.println(n + ", " + averageTime);
         return new Result(n, averageTime);
     }
 
