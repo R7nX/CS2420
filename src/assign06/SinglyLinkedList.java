@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SinglyLinkedList<T> implements List<T> {
-
     private Node<T> head;
     private int size;
 
@@ -147,17 +146,22 @@ public class SinglyLinkedList<T> implements List<T> {
         @Override
         public void remove() {
             if (pre == null) {
-                throw new NoSuchElementException();
+                throw new IllegalStateException();
             }
-            pre.next = curr;
+            if (pre == head)
+                head = curr;
+            else
+                pre.next = curr;
+
+            pre = null;
+            size--;
         }
     }
 
     private static class Node<T> {
         private T data;
         private Node<T> next;
-
-        public Node(T data, Node next) {
+        public Node(T data, Node<T> next) {
             this.data = data;
             this.next = next;
         }
