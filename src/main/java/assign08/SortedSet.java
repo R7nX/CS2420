@@ -88,7 +88,7 @@ public interface SortedSet<Type extends Comparable<? super Type>> {
   public boolean remove(Type item);
 
   /**
-   * Ensures that this set does not contain any of the items in the specified
+   * Ensures that this set does not contains any of the items in the specified
    * collection.
    * 
    * @param items - the collection of items whose absence is ensured in this set

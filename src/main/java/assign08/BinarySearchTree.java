@@ -191,8 +191,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
       return false;
 
     root = remove(root, item);
-    if (root == null)
-      return false;
+    size--;
     return true;
   }
 
@@ -229,10 +228,19 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 
       // Node to remove has 2 fking chidlren
       else {
-        // TODO: Fill this shit in (but how?)
+        BinaryNode<Type> successor = findMin(node.rightChild);
+        node.element = successor.getElement();
+
+        node.rightChild = remove(node.rightChild, successor.getElement());
       }
     }
-    return null;
+    return node;
+  }
+
+  private BinaryNode<Type> findMin(BinaryNode<Type> node) {
+    while (node.leftChild != null)
+      node = node.leftChild;
+    return node;
   }
 
   @Override
@@ -243,8 +251,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 
   @Override
   public int size() {
-    // TODO Auto-generated method stub
-    return 0;
+    return this.size;
   }
 
   @Override
@@ -259,11 +266,13 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
     if (node == null)
       return;
 
-    toArrayList(node.leftChild, result);
+    if (node.leftChild != null)
+      toArrayList(node.leftChild, result);
 
     result.add(node.getElement());
 
-    toArrayList(node.rightChild, result);
+    if (node.rightChild != null)
+      toArrayList(node.rightChild, result);
   }
 
   public void generateDotFile(String filename) {
