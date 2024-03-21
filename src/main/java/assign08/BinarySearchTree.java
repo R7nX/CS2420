@@ -2,8 +2,6 @@ package assign08;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
-import java.security.spec.RSAPublicKeySpec;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
@@ -13,7 +11,7 @@ import java.util.NoSuchElementException;
  */
 public class BinarySearchTree<Type extends Comparable<? super Type>> implements SortedSet<Type> {
 
-  private class BinaryNode<Type> {
+  private class BinaryNode<T> {
     private Type element;
     private BinaryNode<Type> leftChild;
     private BinaryNode<Type> rightChild;
@@ -31,6 +29,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
       this.element = element;
       this.leftChild = null;
       this.rightChild = null;
+      this.dotLabel++;
     }
 
     public Type getElement() {
@@ -245,8 +244,16 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 
   @Override
   public boolean removeAll(Collection<? extends Type> items) {
-    // TODO Auto-generated method stub
-    return false;
+    if (items.isEmpty())
+      return false;
+
+    boolean finished = false;
+    for (Type item : items) {
+      if (this.remove(item))
+        finished = true;
+    }
+
+    return finished;
   }
 
   @Override
