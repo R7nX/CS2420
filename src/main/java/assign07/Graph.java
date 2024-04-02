@@ -114,7 +114,7 @@ public class Graph<T> {
     }
 
     /*
-    Sudo code for this (delete later)
+    Psudo code for this (delete later)
 
     for (each vertex in graph.vertices)
         if (vertex.indegree == 0)

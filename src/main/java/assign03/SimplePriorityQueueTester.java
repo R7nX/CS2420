@@ -33,7 +33,6 @@ class SimplePriorityQueueTester<E> {
         priorityQueue.insert(numbers.get(3));
         priorityQueue.insert(numbers.get(7));
         priorityQueue.insert(numbers.get(2));
-
     }
 
     @Test
