@@ -2,35 +2,61 @@ package assign09;
 
 import java.util.*;
 
+
 public class HashTable<K, V> implements Map<K, V> {
-
-    private LinkedList<MapEntry<K, V>>[] table;
+    private static final double LOAD_FACTOR_THRESHOLD = 10.0;
+    private int capacity = 10;
+    private ArrayList<LinkedList<MapEntry<K, V>>> table;
     private int size;
+    private int collisions;
 
-    public HashTable(){
-        table = new LinkedList[10];
+    public HashTable() {
+        table = new ArrayList<>(capacity);
+        for (int i = 0; i < capacity; i++) {
+            table.add(new LinkedList<>());
+        }
         size = 0;
     }
 
-    private int hash(K key){
-        return Math.abs(key.hashCode() % table.length);
+    private int hash(K key) {
+        return Math.abs(key.hashCode() % table.size());
+    }
+
+    private void resizeTable() {
+        double loadFactor = (double) size / capacity;
+        if (loadFactor > LOAD_FACTOR_THRESHOLD) {
+            int newCapacity = capacity * 2;
+            ArrayList<LinkedList<MapEntry<K, V>>> newTable = new ArrayList<>(newCapacity);
+            for (int i = 0; i < newCapacity; i++) {
+                newTable.add(new LinkedList<>());
+            }
+            for (LinkedList<MapEntry<K, V>> bucket : table) {
+                for (MapEntry<K, V> entry : bucket) {
+                    int index = Math.abs(entry.getKey().hashCode() % newCapacity);
+                    newTable.get(index).add(entry);
+                }
+            }
+            table = newTable;
+            capacity = newCapacity;
+        }
     }
 
     @Override
     public void clear() {
-        for (int i = 0; i < table.length; i++){
-            if (table[i] != null)
-                table[i].clear();
+        table.clear();
+        for (int i = 0; i < capacity; i++) {
+            table.add(new LinkedList<>());
         }
-
         size = 0;
     }
 
     @Override
     public boolean containsKey(K key) {
+        if (key == null)
+            return false;
         int index = hash(key);
-        for (MapEntry<K, V> entry : table[index]) {
-            if (entry.getKey().equals(key)) {
+        for (MapEntry<K, V> entry : table.get(index)) {
+            if (entry.getKey() != null && entry.getKey().equals(key)) {
                 return true;
             }
         }
@@ -39,9 +65,11 @@ public class HashTable<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsValue(V value) {
+        if (value == null)
+            return false;
         for (LinkedList<MapEntry<K, V>> bucket : table) {
             for (MapEntry<K, V> entry : bucket) {
-                if (entry.getValue().equals(value)) {
+                if (entry != null && entry.getValue() != null && entry.getValue().equals(value)) {
                     return true;
                 }
             }
@@ -61,7 +89,7 @@ public class HashTable<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         int index = hash(key);
-        for (MapEntry<K, V> entry : table[index]) {
+        for (MapEntry<K, V> entry : table.get(index)) {
             if (entry.getKey().equals(key)) {
                 return entry.getValue();
             }
@@ -76,30 +104,39 @@ public class HashTable<K, V> implements Map<K, V> {
 
     @Override
     public V put(K key, V value) {
+        resizeTable();
         int index = hash(key);
-        for (MapEntry<K, V> entry : table[index]) {
-            if (entry.getKey().equals(key)) {
-                V oldValue = entry.getValue();
-                entry.setValue(value);
-                return oldValue;
+        if (table.get(index) == null) { // if null create a linked list
+            table.set(index, new LinkedList<>());
+        } else {
+            for (MapEntry<K, V> entry : table.get(index)) {
+                if (entry.getKey().equals(key)) {
+                    V oldValue = entry.getValue();
+                    entry.setValue(value);
+                    return oldValue;
+                }
+                collisions++; // Increment collision count
             }
         }
-        table[index].add(new MapEntry<>(key, value));
+
+        table.get(index).add(new MapEntry<>(key, value));
         size++;
         return value;
     }
 
     @Override
     public V remove(K key) {
+        if (key == null) {
+            return null;
+        }
         int index = hash(key);
-        Iterator<MapEntry<K, V>> iterator = table[index].iterator();
+        Iterator<MapEntry<K, V>> iterator = table.get(index).iterator();
         while (iterator.hasNext()) {
             MapEntry<K, V> entry = iterator.next();
-            if (entry.getKey().equals(key)) {
-                V value = entry.getValue();
+            if (key.equals(entry.getKey())) {
                 iterator.remove();
                 size--;
-                return value;
+                return entry.getValue();
             }
         }
         return null;
@@ -109,4 +146,9 @@ public class HashTable<K, V> implements Map<K, V> {
     public int size() {
         return size;
     }
+
+    public int getCollisions(){
+        return collisions;
+    }
+
 }

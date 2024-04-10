@@ -74,8 +74,7 @@ public class StudentBadHash {
 	}
 
 	public int hashCode() {
-		// FILL IN and add method comment
-		
-		return 0;
+		// All student will have the same hashCode
+		return 1;
 	}
 }
