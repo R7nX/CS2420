@@ -1,5 +1,6 @@
 package assign10;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class FindKLargest {
 	 * @throws IllegalArgumentException if k is negative or larger than the size of the given list
 	 */
 	public static <E extends Comparable<? super E>> List<E> findKLargestHeap(List<E> items, int k) throws IllegalArgumentException {
+		List<E> result = new ArrayList<>();
+		BinaryMaxHeap<E> maxHeap = new BinaryMaxHeap<>();
 		return null;
 	}
 
