@@ -1,14 +1,15 @@
 package assign10;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
  * This class contains generic static methods for finding the k largest items in a list.
  * 
- * @author Erin Parker and ??
- * @version ??
+ * @author Erin Parker and Phuc Do and Khang Nguyen
+ * @version 4/11/2023
  */
 public class FindKLargest {
 	
@@ -22,9 +23,13 @@ public class FindKLargest {
 	 * @throws IllegalArgumentException if k is negative or larger than the size of the given list
 	 */
 	public static <E extends Comparable<? super E>> List<E> findKLargestHeap(List<E> items, int k) throws IllegalArgumentException {
+		if (k < 0 || k > items.size())
+			throw new IllegalArgumentException();
 		List<E> result = new ArrayList<>();
-		BinaryMaxHeap<E> maxHeap = new BinaryMaxHeap<>();
-		return null;
+		BinaryMaxHeap<E> maxHeap = new BinaryMaxHeap<>(items);
+		for (int i = 0; i < k; i++)
+			result.add(maxHeap.extractMax());
+		return result;
 	}
 
 	/**
@@ -37,7 +42,13 @@ public class FindKLargest {
 	 * @throws IllegalArgumentException if k is negative or larger than the size of the given list
 	 */
 	public static <E> List<E> findKLargestHeap(List<E> items, int k, Comparator<? super E> cmp) throws IllegalArgumentException {
-		return null;
+		if (k < 0 || k > items.size())
+			throw new IllegalArgumentException();
+		List<E> result = new ArrayList<>();
+		BinaryMaxHeap<E> maxHeap = new BinaryMaxHeap<>(items, cmp);
+		for (int i = 0; i < k; i++)
+			result.add(maxHeap.extractMax());
+		return result;
 	}
 
 	/**
@@ -50,7 +61,16 @@ public class FindKLargest {
 	 * @throws IllegalArgumentException if k is negative or larger than the size of the given list
 	 */
 	public static <E extends Comparable<? super E>> List<E> findKLargestSort(List<E> items, int k) throws IllegalArgumentException {
-		return null;
+		if (k < 0 || k > items.size())
+			throw new IllegalArgumentException();
+		Collections.sort(items, Collections.reverseOrder());
+		List<E> kLargestItems = new ArrayList<>(k);
+
+		for (int i = 0; i < k; i++) {
+			kLargestItems.add(items.get(i));
+		}
+
+		return kLargestItems;
 	}
 
 	/**
@@ -63,6 +83,19 @@ public class FindKLargest {
 	 * @throws IllegalArgumentException if k is negative or larger than the size of the given list
 	 */
 	public static <E> List<E> findKLargestSort(List<E> items, int k, Comparator<? super E> cmp) throws IllegalArgumentException {
-		return null;
+		if (k < 0 || k > items.size())
+			throw new IllegalArgumentException();
+
+		Collections.sort(items, cmp.reversed());
+
+		// Create a new list to store the k largest items
+		List<E> kLargestItems = new ArrayList<>(k);
+
+		// Add the first k items to the new list
+		for (int i = 0; i < k; i++) {
+			kLargestItems.add(items.get(i));
+		}
+
+		return kLargestItems;
 	}
 }
