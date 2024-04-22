@@ -1,5 +1,5 @@
 a b
-a c
+a b
 a d
 a e
 a f
