@@ -1,6 +1,6 @@
 <nope> This file, IIRC, has
 
-a    few 'o them  punctuation 
+a    few 'o them  punctuation banana_cat hello -- there
 or
 fomatting (sic) things.what?this-should#not"appear"
 

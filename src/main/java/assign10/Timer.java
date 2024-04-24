@@ -42,6 +42,8 @@ public class Timer extends TimerTemplate {
     }
 
 
+
+
     public static void main(String[] args) {
         int[] problemSizes = new int[20];
         for (int i = 0; i < problemSizes.length; i++) {

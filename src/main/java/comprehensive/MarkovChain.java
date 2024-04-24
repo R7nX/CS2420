@@ -48,43 +48,47 @@ public class MarkovChain {
     }
 
     public String getNext(String seed) {
+        result.clear();
         if (model.get(seed) != null) {
-            for (String post : model.get(seed).keySet()) {
-                result.put(post, freqCalculation(seed, post));
-            }
             if (opts.equals("one")) {
+                for (String post : model.get(seed).keySet()) {
+                    result.put(post, freqCalculation(seed, post));
+                }
                 Map<String, Double> sortedResult = new TreeMap<>(new ValueComparator(result));
                 sortedResult.putAll(result);
                 if (!sortedResult.isEmpty()) {
                     return sortedResult.entrySet().iterator().next().getKey();
                 }
             } else if (opts.equals("all")) {
-                List<String> keys = new ArrayList<>(result.keySet());
                 Random random = new Random();
-                String randomKey = keys.get(random.nextInt(keys.size()));
-                Double randomValue = result.get(randomKey);
 
-                Map<String, Double> randomEntry = new HashMap<>();
-                randomEntry.put(randomKey, randomValue);
-                return randomEntry.entrySet().iterator().next().getKey();
+                int sum = 1;
+                for (Map.Entry<String, Integer> word : model.get(seed).entrySet()) {
+                    sum += word.getValue();
+                }
+                int rnd = random.nextInt(sum);
+                for (Map.Entry<String, Integer> entry: model.get(seed).entrySet()){
+                    rnd -= entry.getValue();
+                    if (rnd <= 0)
+                        return entry.getKey();
+                }
             }
         }
         return null;
     }
 
     public Set<Map.Entry<String, Double>> getNextWords(String seed) {
+        result.clear();
         if (model.get(seed) != null) {
             for (String post : model.get(seed).keySet()) {
                 // Calculate the frequency and put it into the result map
                 result.put(post, freqCalculation(seed, post));
             }
-            if (opts == null) {
-                // If opts is null or "one", return the word with the highest frequency
-                Map<String, Double> sortedResult = new TreeMap<>(new ValueComparator(result));
-                sortedResult.putAll(result);
-                if (!sortedResult.isEmpty()) {
-                    return sortedResult.entrySet();
-                }
+            // If opts is null or "one", return the word with the highest frequency
+            Map<String, Double> sortedResult = new TreeMap<>(new ValueComparator(result));
+            sortedResult.putAll(result);
+            if (!sortedResult.isEmpty()) {
+                return sortedResult.entrySet();
             }
         }
         return null;
@@ -99,10 +103,13 @@ public class MarkovChain {
 
         @Override
         public int compare(String o1, String o2) {
-            if (map.get(o1).compareTo(map.get(o2)) > 0) {
-                return -1;
+            int comparison = Double.compare(map.get(o2), map.get(o1));
+            if (comparison != 0) {
+                // If the values are different, return the comparison result
+                return comparison;
             } else {
-                return 1;
+                // If the values are equal, compare by the lexicographical ordering of the keys
+                return o1.compareTo(o2);
             }
         }
     }

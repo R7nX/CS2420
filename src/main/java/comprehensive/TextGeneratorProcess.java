@@ -8,10 +8,20 @@ import java.util.Set;
 
 public class TextGeneratorProcess {
     private MarkovChain model;
+    private String seed;
+    private String path;
+    private int K;
+    private String opts;
 
     public TextGeneratorProcess(String path, String seed, int K, String opts) {
-        toMarkovChain(path, seed, K, opts);
+        this.path = path;
+        this.seed = seed.toLowerCase();
+        this.K = K;
+        this.opts = opts;
+    }
 
+    public void run() {
+        toMarkovChain(path, opts);
         if (opts == null) {
             getNextWords(K, seed);
         } else {
@@ -20,7 +30,7 @@ public class TextGeneratorProcess {
     }
 
     // The method transfer the txt file to markov chain class
-    private void toMarkovChain(String file, String seed, int K, String opts) {
+    private void toMarkovChain(String file, String opts) {
         model = new MarkovChain(opts);
         // read file
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -28,14 +38,14 @@ public class TextGeneratorProcess {
             // go through each line
             while ((line = reader.readLine()) != null) {
                 // iterate and add each word
-                String[] words = line.split("[^\\p{L}']+");
-
+                String[] words = line.toLowerCase().split("\\s+");
                 for (String word : words) {
-                    if (!word.isEmpty()) {
-                        // add
-                        model.add(word);
+                    String[] subwords = word.toLowerCase().split("[^a-zA-Z0-9_]+");
+                    if (subwords.length > 0 && !subwords[0].isEmpty()) {
+                        model.add(subwords[0]);
                     }
                 }
+
             }
 
         } catch (IOException e) {
@@ -51,7 +61,7 @@ public class TextGeneratorProcess {
         entry = model.getNextWords(seed);
         for (Map.Entry<String, Double> mapEntry : entry) {
             // Append key-value pair to StringBuilder
-            if (count == K || mapEntry.getKey() == null) {
+            if (count > K || mapEntry.getKey() == null) {
                 break;
             }
             resultBuilder.append(mapEntry.getKey()).append(" "); // Add newline for better readability, adjust as needed
@@ -67,18 +77,18 @@ public class TextGeneratorProcess {
         resultBuilder.append(seed).append(" "); // Append seed as the first word
 
         String currentWord = seed;
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count - 1; i++) {
             String nextWord = model.getNext(currentWord);
             if (nextWord != null) {
                 resultBuilder.append(nextWord).append(" ");
                 currentWord = nextWord;
             } else {
-                break; // If there are no more words, break the loop
+                resultBuilder.append(seed).append(" ");
+                currentWord = seed;
             }
         }
-        System.out.println(resultBuilder.toString().trim());
+//        System.out.println(resultBuilder.toString().trim());
     }
-
 
 }
 

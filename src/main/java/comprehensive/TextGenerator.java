@@ -1,6 +1,5 @@
 package comprehensive;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 public class TextGenerator {
 	public static void main(String[] args) {
@@ -17,6 +16,7 @@ public class TextGenerator {
 			opts = args[3];
 		}
 		TextGeneratorProcess processor = new TextGeneratorProcess(path, seed, Integer.parseInt(K), opts);
+		processor.run();
 
 	}
 

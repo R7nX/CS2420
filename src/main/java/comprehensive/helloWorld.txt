@@ -1,9 +1,2 @@
 hello world
-world nice
-world nice
-hello man
-nice bro
-bro hi
-nice morning
-morning good
-good morning
+
